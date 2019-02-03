@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_xs">12sp</dimen>
+    <dimen name="text_size_s">14sp</dimen>
+    <dimen name="text_size_m">16sp</dimen>
+    <dimen name="text_size_l">18sp</dimen>
+    <dimen name="text_size_xl">20sp</dimen>
+    <dimen name="text_size_xxl">24sp</dimen>
+    <dimen name="text_size_xxxl">28sp</dimen>
+
+    <dimen name="margin_xs">2dp</dimen>
+    <dimen name="margin_s">4dp</dimen>
+    <dimen name="margin_m">6dp</dimen>
+    <dimen name="margin_l">8dp</dimen>
+    <dimen name="margin_xl">10dp</dimen>
+    <dimen name="margin_xxl">12dp</dimen>
+    <dimen name="margin_xxxl">14dp</dimen>
+
+    <dimen name="padding_xs">2dp</dimen>
+    <dimen name="padding_s">4dp</dimen>
+    <dimen name="padding_m">6dp</dimen>
+    <dimen name="padding_l">8dp</dimen>
+    <dimen name="padding_xl">10dp</dimen>
+    <dimen name="padding_xxl">12dp</dimen>
+    <dimen name="padding_xxxl">14dp</dimen>
+
+    <dimen name="symbols_list_ic_favorite_size">32dp</dimen>
+    <dimen name="symbol_details_ic_favorite_size">40dp</dimen>
+</resources>

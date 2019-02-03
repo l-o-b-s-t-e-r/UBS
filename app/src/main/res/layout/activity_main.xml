@@ -9,7 +9,7 @@
     <fragment android:id="@+id/fragment_symbols_list"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:name="com.lobster.usb.presentation.ui.symbols_list.SymbolsListFragment"
+              android:name="com.lobster.usb.presentation.ui.symbol_details.SymbolDetailsFragment"
               tools:layout="@layout/fragment_symbols_list"/>
 
 </FrameLayout>

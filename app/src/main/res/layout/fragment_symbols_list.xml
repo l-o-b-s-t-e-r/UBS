@@ -1,15 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".presentation.ui.symbols_list.SymbolsListFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent" android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".presentation.ui.symbols_list.SymbolsListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-            android:id="@+id/textExample"
+            android:id="@+id/txtSymbolsListTitle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:padding="@dimen/margin_xl"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_xxl"
+            tools:text="Main Symbols List"/>
 
-</FrameLayout>
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView android:id="@+id/txtSymbol"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:text="@string/symbols_list_symbol"
+                  android:gravity="center"
+                  android:textSize="@dimen/text_size_m"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toStartOf="@id/txtChange"/>
+
+        <TextView android:id="@+id/txtChange"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:text="@string/symbols_list_change"
+                  android:gravity="center"
+                  android:textSize="@dimen/text_size_m"
+                  app:layout_constraintStart_toEndOf="@id/txtSymbol"
+                  app:layout_constraintEnd_toStartOf="@id/txtLastPrice"/>
+
+        <TextView android:id="@+id/txtLastPrice"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:text="@string/symbols_list_last_price"
+                  android:gravity="center"
+                  android:textSize="@dimen/text_size_m"
+                  app:layout_constraintStart_toEndOf="@id/txtChange"
+                  app:layout_constraintEnd_toEndOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/listSymbols"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:orientation="vertical"
+            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_symbol"/>
+
+</LinearLayout>

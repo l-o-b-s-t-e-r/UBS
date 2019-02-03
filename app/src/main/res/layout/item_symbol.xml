@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_l"
+        android:paddingBottom="@dimen/padding_l">
+
+    <TextView
+            android:id="@+id/txtSymbolCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/txtChange"
+            android:textSize="@dimen/text_size_l"
+            android:textStyle="bold"
+            tools:text="BABA"/>
+
+    <TextView
+            android:id="@+id/txtSymbolName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/txtSymbolCode"
+            tools:text="Alibaba Group Holding Limited"/>
+
+    <TextView
+            android:id="@+id/txtChange"
+            android:layout_width="0dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/txtSymbolCode"
+            app:layout_constraintEnd_toStartOf="@id/txtLastPrice"
+            android:textSize="@dimen/text_size_l"
+            tools:text="-0.95%"/>
+
+    <TextView
+            android:id="@+id/txtLastPrice"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginEnd="@dimen/margin_xl"
+            app:layout_constraintStart_toEndOf="@id/txtChange"
+            app:layout_constraintEnd_toStartOf="@id/btnAddToFavorite"
+            android:textStyle="bold"
+            android:gravity="end"
+            android:textSize="@dimen/text_size_l"
+            tools:text="162.18"/>
+
+    <ToggleButton
+            android:id="@+id/btnAddToFavorite"
+            android:layout_width="@dimen/symbols_list_ic_favorite_size"
+            android:layout_height="@dimen/symbols_list_ic_favorite_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textOn=""
+            android:textOff=""
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/toggle_favorite"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,14 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".presentation.ui.symbol_details.SymbolDetailsFragment">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.symbol_details.SymbolDetailsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            android:id="@+id/txtCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/text_size_xl"
+            android:textStyle="bold"
+            tools:text="Facebook"/>
 
-</FrameLayout>
+    <TextView
+            android:id="@+id/txtSymbolCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_m"
+            app:layout_constraintStart_toEndOf="@id/txtCompanyName"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/text_size_xl"
+            tools:text="FB"/>
+
+    <TextView
+            android:id="@+id/txtChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/txtCompanyName"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_xxxl"
+            tools:text="-0.95%"/>
+
+    <TextView
+            android:id="@+id/txtCeoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/txtChange"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_m"
+            android:text="@string/symbols_list_ceo"/>
+
+    <TextView android:id="@+id/txtCeoName"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintStart_toEndOf="@id/txtCeoTitle"
+              app:layout_constraintBottom_toBottomOf="@id/txtCeoTitle"
+              android:layout_marginStart="@dimen/margin_m"
+              tools:text="Mark Zuckerberg Mark Zuckerberg"/>
+
+    <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/txtCeoTitle"
+            tools:text="@string/pangram"/>
+
+    <TextView android:id="@+id/website"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/txtDescription"
+              app:layout_constraintEnd_toEndOf="parent"
+              tools:text="http://www.facebook.com"/>
+
+    <ToggleButton
+            android:id="@+id/btnAddToFavorite"
+            android:layout_width="@dimen/symbol_details_ic_favorite_size"
+            android:layout_height="@dimen/symbol_details_ic_favorite_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtCompanyName"
+            app:layout_constraintBottom_toBottomOf="@id/txtChange"
+            android:textOn=""
+            android:textOff=""
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/toggle_favorite"/>
+
+
+</android.support.constraint.ConstraintLayout>
