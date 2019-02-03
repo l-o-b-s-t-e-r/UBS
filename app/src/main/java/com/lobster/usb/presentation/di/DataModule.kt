@@ -2,9 +2,8 @@ package com.lobster.usb.presentation.di
 
 import com.lobster.usb.BuildConfig
 import com.lobster.usb.data.IexApi
-import com.lobster.usb.data.LocalRepositoryImpl
-import com.lobster.usb.data.RemoteRepositoryImpl
-import com.lobster.usb.domain.interfaces.LocalRepository
+import com.lobster.usb.data.LocalRepository
+import com.lobster.usb.data.RemoteRepository
 import dagger.Module
 import dagger.Provides
 import io.objectbox.BoxStore
@@ -52,10 +51,10 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideLocalRepository(boxStore: BoxStore) = LocalRepositoryImpl(boxStore)
+    fun provideLocalRepository(boxStore: BoxStore) = LocalRepository(boxStore)
 
     @Provides
     @Singleton
-    fun provideRemoteRepository(api: IexApi) = RemoteRepositoryImpl(api)
+    fun provideRemoteRepository(api: IexApi) = RemoteRepository(api)
 
 }

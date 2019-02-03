@@ -10,8 +10,7 @@ import com.lobster.usb.presentation.presenters.base.IBasePresenter
 
 import javax.inject.Inject
 
-abstract class BaseFragment<V : IBasePresenter.View, P : IBasePresenter.Actions<V>> : Fragment(),
-    IBasePresenter.View {
+abstract class BaseFragment<V : IBasePresenter.View, P : IBasePresenter.Actions<V>> : Fragment() {
 
     @Inject
     lateinit var presenter: P
