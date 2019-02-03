@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'io.objectbox'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -17,8 +19,19 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        def STRING = "String"
+        def ENDPOINT = "\"https://api.iextrading.com/1.0/\""
+        def SERVER = "SERVER"
+
+        debug {
+            debuggable = true
+            buildConfigField STRING, SERVER, ENDPOINT
+        }
+
         release {
-            minifyEnabled false
+            debuggable = false
+            buildConfigField STRING, SERVER, ENDPOINT
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -26,7 +39,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$android_support"
     implementation "com.android.support:design:$android_support"
     implementation "com.android.support:support-v4:$android_support"
@@ -51,11 +64,13 @@ dependencies {
 
     //Dagger
     implementation "com.google.dagger:dagger:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
+    //ObjectBox
     implementation "io.objectbox:objectbox-android:$objectbox_version"
-    annotationProcessor "io.objectbox:objectbox-processor:$objectbox_version"
+    kapt "io.objectbox:objectbox-processor:$objectbox_version"
+    implementation "io.objectbox:objectbox-kotlin:$objectbox_version"
 
     //Gson
     implementation "com.google.code.gson:gson:2.8.2"
