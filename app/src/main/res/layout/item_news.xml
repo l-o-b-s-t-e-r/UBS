@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_l"
+        android:layout_marginEnd="@dimen/margin_l">
+
+    <ImageView android:id="@+id/imgCover"
+               android:layout_width="0dp"
+               android:layout_height="0dp"
+               android:paddingEnd="@dimen/margin_xxxl"
+               app:layout_constraintWidth_percent="0.33"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintBottom_toBottomOf="@id/viewSymbolCodes"
+               tools:src="@android:color/black"/>
+
+    <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_xs"
+            android:layout_marginTop="@dimen/margin_m"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgCover"
+            tools:text="29.10.1994"/>
+
+    <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_l"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/margin_m"
+            app:layout_constraintTop_toBottomOf="@id/txtDate"
+            app:layout_constraintStart_toEndOf="@id/imgCover"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Alibaba video streaming"/>
+
+    <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xs"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle"
+            app:layout_constraintStart_toEndOf="@id/imgCover"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="@string/pangram"/>
+
+    <LinearLayout
+            android:id="@+id/viewSymbolCodes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/margin_xl"
+            app:layout_constraintStart_toEndOf="@id/imgCover"
+            app:layout_constraintTop_toBottomOf="@id/txtDescription"
+            app:layout_constraintEnd_toEndOf="parent"/>
+</android.support.constraint.ConstraintLayout>
