@@ -51,7 +51,7 @@
               app:layout_constraintStart_toEndOf="@id/txtCeoTitle"
               app:layout_constraintBottom_toBottomOf="@id/txtCeoTitle"
               android:layout_marginStart="@dimen/margin_m"
-              tools:text="Mark Zuckerberg Mark Zuckerberg"/>
+              tools:text="Mark Zuckerberg"/>
 
     <TextView
             android:id="@+id/txtDescription"
