@@ -1,9 +1,14 @@
 package com.lobster.usb.presentation.di
 
+import com.google.gson.GsonBuilder
 import com.lobster.usb.BuildConfig
 import com.lobster.usb.data.IexApi
 import com.lobster.usb.data.LocalRepository
 import com.lobster.usb.data.RemoteRepository
+import com.lobster.usb.domain.adapters.SymbolTypeAdapter
+import com.lobster.usb.domain.interfaces.ILocalRepository
+import com.lobster.usb.domain.interfaces.IRemoteRepository
+import com.lobster.usb.domain.wrappers.SymbolsWrapper
 import dagger.Module
 import dagger.Provides
 import io.objectbox.BoxStore
@@ -12,9 +17,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-
-import javax.inject.Singleton
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
+
 
 /**
  * Created by Lobster on 27/10/18.
@@ -38,12 +43,18 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient) = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .client(client)
-        .baseUrl(BuildConfig.SERVER)
-        .build()
+    fun provideRetrofit(client: OkHttpClient): Retrofit {
+        val gson = GsonBuilder()
+            .registerTypeAdapter(SymbolsWrapper::class.java, SymbolTypeAdapter())
+            .create()
+
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(client)
+            .baseUrl(BuildConfig.SERVER)
+            .build()
+    }
 
     @Provides
     @Singleton
@@ -51,10 +62,10 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideLocalRepository(boxStore: BoxStore) = LocalRepository(boxStore)
+    fun provideLocalRepository(boxStore: BoxStore): ILocalRepository = LocalRepository(boxStore)
 
     @Provides
     @Singleton
-    fun provideRemoteRepository(api: IexApi) = RemoteRepository(api)
+    fun provideRemoteRepository(api: IexApi): IRemoteRepository = RemoteRepository(api)
 
 }
