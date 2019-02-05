@@ -1,11 +1,13 @@
 package com.lobster.usb.presentation.di
 
+import android.app.Application
 import com.google.gson.GsonBuilder
 import com.lobster.usb.BuildConfig
 import com.lobster.usb.data.IexApi
 import com.lobster.usb.data.LocalRepository
 import com.lobster.usb.data.RemoteRepository
 import com.lobster.usb.domain.adapters.SymbolTypeAdapter
+import com.lobster.usb.domain.entities.MyObjectBox
 import com.lobster.usb.domain.interfaces.ILocalRepository
 import com.lobster.usb.domain.interfaces.IRemoteRepository
 import com.lobster.usb.domain.wrappers.SymbolsWrapper
@@ -59,6 +61,12 @@ class DataModule {
     @Provides
     @Singleton
     fun provideIexApi(retrofit: Retrofit) = retrofit.create<IexApi>(IexApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideObjectBox(application: Application): BoxStore {
+        return MyObjectBox.builder().androidContext(application).build()
+    }
 
     @Provides
     @Singleton
