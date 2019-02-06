@@ -12,7 +12,8 @@ import java.util.*
 /**
  * Created by Lobster on 25.11.17.
  */
-abstract class BaseRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<ViewTypeDelegateAdapter<out T>.BaseViewHolder>() {
+abstract class BaseRecyclerViewAdapter<T : Any>() :
+    RecyclerView.Adapter<ViewTypeDelegateAdapter<out T>.BaseViewHolder>() {
 
     open val layoutId: Int = 0
 
@@ -141,6 +142,8 @@ abstract class BaseRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<ViewTyp
         notifyItemRemoved(position)
     }
 
+    open fun getLastItem() = if (items.isEmpty()) null else items.last()
+
     open fun removeLastItem() {
         remove(items.lastIndex)
     }
@@ -170,12 +173,12 @@ abstract class BaseRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<ViewTyp
 
     private fun animateAddItems(newItems: List<T>) {
         newItems.filter { !items.contains(it) }
-                .forEach { add(it) }
+            .forEach { add(it) }
     }
 
     private fun animateRemoveItems(newItems: List<T>) {
         items.filter { !items.contains(it) }
-                .forEachReversedWithIndex { i, t -> remove(i) }
+            .forEachReversedWithIndex { i, t -> remove(i) }
     }
 
     private fun moveItem(fromPosition: Int, toPosition: Int) {

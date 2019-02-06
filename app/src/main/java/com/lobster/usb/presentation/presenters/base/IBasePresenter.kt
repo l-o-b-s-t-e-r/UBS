@@ -3,7 +3,9 @@ package com.lobster.usb.presentation.presenters.base
 interface IBasePresenter {
 
     interface View {
+        fun showLoading()
 
+        fun hideLoading()
     }
 
     open class Actions<T : IBasePresenter.View> {

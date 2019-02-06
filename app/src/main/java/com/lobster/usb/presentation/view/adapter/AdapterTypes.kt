@@ -5,4 +5,6 @@ package com.lobster.usb.presentation.view.adapter
  */
 object AdapterTypes {
     const val DEFAULT = 0
+    const val SYMBOL = 1
+    const val SPINNER = 2
 }
