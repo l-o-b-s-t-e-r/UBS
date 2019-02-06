@@ -4,6 +4,7 @@ package com.lobster.usb.presentation.ui.symbols_list
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import com.lobster.usb.App
 import com.lobster.usb.R
@@ -14,24 +15,31 @@ import com.lobster.usb.presentation.ui.base.BaseFragment
 import com.lobster.usb.presentation.view.adapter.AdapterTypes.SPINNER
 import com.lobster.usb.presentation.view.adapter.AdapterTypes.SYMBOL
 import com.lobster.usb.presentation.view.adapter.EndlessRecyclerViewScrollListener
+import com.lobster.usb.presentation.view.adapter.SimpleItemTouchHelperCallback
 import kotlinx.android.synthetic.main.fragment_symbols_list.*
+
 
 class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsListPresenter.Actions>(),
     ISymbolsListPresenter.View {
 
     lateinit var symbolsAdapter: SymbolsListAdapter
     lateinit var symbolsRecyclerScrollListener: EndlessRecyclerViewScrollListener
+    lateinit var itemTouchHelper: ItemTouchHelper
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        symbolsAdapter = SymbolsListAdapter({ symbol ->
+        symbolsAdapter = SymbolsListAdapter({ viewHolder ->
+            itemTouchHelper.startDrag(viewHolder)
+        }, { symbol ->
 
         }, { symbol, isFavorite ->
             presenter.addToFavorite(symbol, isFavorite)
         })
 
-        symbolsAdapter.addAdapter(SYMBOL, symbolsAdapter.SymbolsAdapter())
+        val innerSymbolsAdapter = symbolsAdapter.SymbolsAdapter()
+        symbolsAdapter.addAdapter(SYMBOL, innerSymbolsAdapter)
         symbolsAdapter.addAdapter(SPINNER, symbolsAdapter.SpinnerAdapter())
+        itemTouchHelper = ItemTouchHelper(SimpleItemTouchHelperCallback(innerSymbolsAdapter))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +52,7 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
 
         listSymbols.adapter = symbolsAdapter
         listSymbols.addOnScrollListener(symbolsRecyclerScrollListener)
+        itemTouchHelper.attachToRecyclerView(listSymbols)
 
         presenter.getSymbols("")
     }
