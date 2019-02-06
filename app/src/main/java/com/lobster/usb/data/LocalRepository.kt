@@ -6,6 +6,7 @@ import com.lobster.usb.domain.mappers.Mapper
 import com.lobster.usb.domain.wrappers.SymbolsWrapper
 import io.objectbox.Box
 import io.objectbox.BoxStore
+import io.reactivex.Completable
 import io.reactivex.Single
 
 class LocalRepository(private val boxStore: BoxStore) : ILocalRepository {
@@ -38,7 +39,10 @@ class LocalRepository(private val boxStore: BoxStore) : ILocalRepository {
                 val symbolEntity = Mapper.symbolToEntity(symbol.value)
                 symbolEntity.code!!.target = getSymbolCode(symbol.key)
                 symbolEntity.company!!.target = SymbolCompanyEntity(symbol.value.companyName)
-                symbolEntity.id = getSymbolByCode(symbol.key)?.id ?: 0L
+                getSymbolByCode(symbol.key)?.let {
+                    symbolEntity.id = it.id
+                    symbolEntity.isFavorite = it.isFavorite
+                }
 
                 boxSymbol.put(symbolEntity)
                 symbolsEntities.add(symbolEntity)
@@ -54,6 +58,13 @@ class LocalRepository(private val boxStore: BoxStore) : ILocalRepository {
 
     override fun getSymbolNews(symbolId: Long): Single<List<SymbolNewsEntity>> {
         return Single.just(boxSymbol.get(symbolId).news)
+    }
+
+    override fun setSymbolAsFavorite(symbolId: Long, isFavorite: Boolean): Completable {
+        return Completable.fromAction {
+            val symbolEntity = boxSymbol.get(symbolId).also { it.isFavorite = isFavorite }
+            boxSymbol.put(symbolEntity)
+        }
     }
 
     override fun isEmpty(): Single<Boolean> {

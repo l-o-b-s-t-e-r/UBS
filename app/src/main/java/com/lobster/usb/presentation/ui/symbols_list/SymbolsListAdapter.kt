@@ -11,7 +11,10 @@ import com.lobster.usb.utils.inflate
 import kotlinx.android.synthetic.main.item_symbol.view.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
-class SymbolsListAdapter(val onItemClick: (Symbol) -> Unit) : BaseRecyclerViewAdapter<RecyclerViewItem>() {
+class SymbolsListAdapter(
+    val onItemClick: (Symbol) -> Unit,
+    val onFavoriteClick: (Symbol, isFavorite: Boolean) -> Unit
+) : BaseRecyclerViewAdapter<RecyclerViewItem>() {
 
     inner class SymbolsAdapter : ViewTypeDelegateAdapter<Symbol>() {
         override fun onCreateViewHolder(parent: ViewGroup) = SymbolsViewHolder(parent.inflate(R.layout.item_symbol))
@@ -23,7 +26,14 @@ class SymbolsListAdapter(val onItemClick: (Symbol) -> Unit) : BaseRecyclerViewAd
                     txtCompanyName.text = symbol.companyName
                     txtChange.text = symbol.change.toString()
                     txtLastPrice.text = symbol.lastPrice.toString()
+                    btnAddToFavorite.isChecked = symbol.isFavorite
+
                     onClick { onItemClick.invoke(symbol) }
+                    btnAddToFavorite.onClick { view ->
+                        symbol.isFavorite = !symbol.isFavorite
+                        btnAddToFavorite.isChecked = symbol.isFavorite
+                        onFavoriteClick.invoke(symbol, symbol.isFavorite)
+                    }
                 }
             }
         }

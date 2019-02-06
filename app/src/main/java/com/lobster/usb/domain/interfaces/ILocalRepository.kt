@@ -5,6 +5,7 @@ import com.lobster.usb.domain.entities.SymbolCompanyEntity
 import com.lobster.usb.domain.entities.SymbolEntity
 import com.lobster.usb.domain.entities.SymbolNewsEntity
 import com.lobster.usb.domain.wrappers.SymbolsWrapper
+import io.reactivex.Completable
 import io.reactivex.Single
 
 interface ILocalRepository {
@@ -18,6 +19,8 @@ interface ILocalRepository {
     fun getSymbolCompany(symbolId: Long): Single<SymbolCompanyEntity>
 
     fun getSymbolNews(symbolId: Long): Single<List<SymbolNewsEntity>>
+
+    fun setSymbolAsFavorite(symbolId: Long, isFavorite: Boolean): Completable
 
     fun isEmpty(): Single<Boolean>
 

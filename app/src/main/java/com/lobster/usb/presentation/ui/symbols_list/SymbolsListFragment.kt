@@ -24,9 +24,12 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        symbolsAdapter = SymbolsListAdapter {
+        symbolsAdapter = SymbolsListAdapter({ symbol ->
 
-        }
+        }, { symbol, isFavorite ->
+            presenter.addToFavorite(symbol, isFavorite)
+        })
+
         symbolsAdapter.addAdapter(SYMBOL, symbolsAdapter.SymbolsAdapter())
         symbolsAdapter.addAdapter(SPINNER, symbolsAdapter.SpinnerAdapter())
     }

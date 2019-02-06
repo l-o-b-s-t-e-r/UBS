@@ -12,7 +12,7 @@ class SymbolEntity(
 
     val lastPrice: Double = 0.0,
 
-    val isFavorite: Boolean = false,
+    var isFavorite: Boolean = false,
 
     @Id
     var id: Long = 0

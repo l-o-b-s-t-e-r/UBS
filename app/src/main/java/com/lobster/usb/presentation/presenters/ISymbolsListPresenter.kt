@@ -11,6 +11,8 @@ interface ISymbolsListPresenter {
 
     abstract class Actions : IBasePresenter.Actions<ISymbolsListPresenter.View>() {
         abstract fun getSymbols(query: String = "", page: Int = 0)
+
+        abstract fun addToFavorite(symbol: Symbol, isFavorite: Boolean)
     }
 
 }
