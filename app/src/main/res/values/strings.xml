@@ -7,9 +7,10 @@
         anim id est laborum.
     </string>
 
+    <string name="symbols_list_search_hint">Search symbols</string>
     <string name="symbols_list_symbol">Symbol</string>
     <string name="symbols_list_change">Change</string>
     <string name="symbols_list_last_price">Last price</string>
-    <string name="symbols_list_ceo">CEO:</string>
-    <string name="symbols_list_related">Related:</string>
+    <string name="symbol_details_ceo">CEO:</string>
+    <string name="symbol_details_related">Related:</string>
 </resources>

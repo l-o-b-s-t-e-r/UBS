@@ -7,6 +7,27 @@
               android:orientation="vertical"
               tools:context=".presentation.ui.symbols_list.SymbolsListFragment">
 
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_xl">
+
+        <AutoCompleteTextView
+                android:id="@+id/edTxtSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_xl"
+                android:background="@drawable/search_background"
+                android:hint="@string/symbols_list_search_hint"/>
+
+        <ImageView android:id="@+id/btnSearch"
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:layout_gravity="end"
+                   android:layout_marginEnd="@dimen/padding_l"
+                   android:src="@drawable/ic_search"/>
+    </FrameLayout>
+
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -44,8 +65,8 @@
             android:id="@+id/listSymbols"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:orientation="vertical"
-            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:itemCount="5"
             tools:listitem="@layout/item_symbol"/>
 

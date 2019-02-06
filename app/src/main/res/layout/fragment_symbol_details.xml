@@ -43,7 +43,7 @@
             app:layout_constraintTop_toBottomOf="@id/txtChange"
             android:textStyle="bold"
             android:textSize="@dimen/text_size_m"
-            android:text="@string/symbols_list_ceo"/>
+            android:text="@string/symbol_details_ceo"/>
 
     <TextView android:id="@+id/txtCeoName"
               android:layout_width="wrap_content"
