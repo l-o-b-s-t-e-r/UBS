@@ -14,7 +14,7 @@ class SymbolTypeAdapter : TypeAdapter<SymbolsWrapper>() {
     }
 
     override fun read(jsonReader: JsonReader): SymbolsWrapper {
-        val symbolsDto = mutableListOf<SymbolDto>()
+        val symbolsDto = mutableMapOf<String, SymbolDto>()
         var symbolCode: String = ""
         var companyName: String = ""
         var change: Double = 0.0
@@ -40,7 +40,7 @@ class SymbolTypeAdapter : TypeAdapter<SymbolsWrapper>() {
             }
             jsonReader.endObject()
 
-            symbolsDto.add(SymbolDto(symbolCode, companyName, change, lastPrice))
+            symbolsDto.put(symbolCode, SymbolDto(symbolCode, companyName, change, lastPrice))
         }
         jsonReader.endObject()
 
