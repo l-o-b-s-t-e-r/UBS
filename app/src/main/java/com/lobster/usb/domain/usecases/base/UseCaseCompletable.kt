@@ -6,23 +6,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-abstract class UseCaseCompletable<in P>() : DisposableHandler() {
-
-    private lateinit var observer: CustomCompletableObserver
-
+abstract class UseCaseCompletable<P : UseCaseParameters>() : DisposableHandler() {
     protected abstract fun buildUseCase(params: P): Completable
 
-    fun execute(observer: CustomCompletableObserver, params: P) {
-        execute(observer, null, params)
-    }
+    fun execute(observer: CustomCompletableObserver, transformer: CompletableTransformer? = null, params: P = UseCaseParameters() as P) {
+        var observable = buildUseCase(params)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 
-    fun execute(observer: CustomCompletableObserver, transformer: CompletableTransformer?, params: P) {
-        this.observer = observer
-        addDisposable(
-            this.buildUseCase(params)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(observer)
-        )
+        transformer?.let {
+            observable = observable.compose(it)
+        }
+
+        addDisposable(observable.subscribeWith(observer))
     }
 }

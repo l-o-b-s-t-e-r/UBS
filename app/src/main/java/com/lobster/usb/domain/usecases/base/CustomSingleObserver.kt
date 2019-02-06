@@ -6,7 +6,7 @@ import io.reactivex.observers.DisposableSingleObserver
  * Created by Lobster on 27/10/18.
  */
 
-class CustomSingleObserver<T> : DisposableSingleObserver<T>() {
+open class CustomSingleObserver<T> : DisposableSingleObserver<T>() {
 
     override fun onSuccess(t: T) {
 

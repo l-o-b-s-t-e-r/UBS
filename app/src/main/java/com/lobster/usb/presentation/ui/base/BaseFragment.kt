@@ -10,7 +10,7 @@ import com.lobster.usb.presentation.presenters.base.IBasePresenter
 
 import javax.inject.Inject
 
-abstract class BaseFragment<V : IBasePresenter.View, P : IBasePresenter.Actions<V>> : Fragment() {
+abstract class BaseFragment<V : IBasePresenter.View, P : IBasePresenter.Actions<V>> : Fragment(), IBasePresenter.View {
 
     @Inject
     lateinit var presenter: P
@@ -36,5 +36,13 @@ abstract class BaseFragment<V : IBasePresenter.View, P : IBasePresenter.Actions<
         presenter.unbindView()
         presenter.dispose()
         super.onDestroyView()
+    }
+
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
     }
 }
