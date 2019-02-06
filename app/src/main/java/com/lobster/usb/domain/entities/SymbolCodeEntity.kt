@@ -6,8 +6,9 @@ import io.objectbox.annotation.Unique
 
 @Entity
 class SymbolCodeEntity(
-    @Id var id: Long = 0,
-
     @Unique
-    val code: String = ""
+    val code: String = "",
+
+    @Id
+    var id: Long = 0
 )
