@@ -12,6 +12,8 @@ interface ILocalRepository {
 
     fun saveSymbolCodes(symbolCodes: List<SymbolCodeEntity>): Single<List<SymbolCodeEntity>>
 
+    fun getAllSymbolCodes(): Single<List<SymbolCodeEntity>>
+
     fun getSymbolCodes(query: String, page: Int, limit: Int): Single<List<SymbolCodeEntity>>
 
     fun saveSymbols(symbols: SymbolsWrapper): Single<List<SymbolEntity>>

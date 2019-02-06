@@ -51,4 +51,13 @@ object Mapper {
 
         return symbols
     }
+
+    fun symbolCodesToString(symbolCodes: List<SymbolCodeEntity>): List<String> {
+        val codes = mutableListOf<String>()
+        symbolCodes.forEach {
+            codes.add(it.code)
+        }
+
+        return codes
+    }
 }

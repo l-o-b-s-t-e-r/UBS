@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.widget.ArrayAdapter
 import com.lobster.usb.App
 import com.lobster.usb.R
 import com.lobster.usb.domain.pojo.Spinner
@@ -17,6 +20,7 @@ import com.lobster.usb.presentation.view.adapter.AdapterTypes.SYMBOL
 import com.lobster.usb.presentation.view.adapter.EndlessRecyclerViewScrollListener
 import com.lobster.usb.presentation.view.adapter.SimpleItemTouchHelperCallback
 import kotlinx.android.synthetic.main.fragment_symbols_list.*
+import org.jetbrains.anko.sdk27.coroutines.onClick
 
 
 class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsListPresenter.Actions>(),
@@ -46,7 +50,7 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
         super.onViewCreated(view, savedInstanceState)
         symbolsRecyclerScrollListener = object : EndlessRecyclerViewScrollListener(listSymbols.layoutManager!!) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                presenter.getSymbols("", page)
+                presenter.getSymbols(editTxtSearch.text.trim().toString(), page)
             }
         }
 
@@ -54,22 +58,44 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
         listSymbols.addOnScrollListener(symbolsRecyclerScrollListener)
         itemTouchHelper.attachToRecyclerView(listSymbols)
 
-        presenter.getSymbols("")
+        btnSearch.onClick { performNewSearch() }
+
+        presenter.getSymbolCodes()
     }
 
     override fun showSymbols(symbols: List<Symbol>) {
-        symbolsAdapter.removeLastItem()
-        symbolsAdapter.addAll(symbols)
+        symbolsAdapter.addAll(symbols, symbolsAdapter.itemCount - 1)
+    }
+
+    override fun enableSuggestions(symbolCodes: List<String>) {
+        editTxtSearch.setAdapter(
+            ArrayAdapter<String>(
+                context,
+                android.R.layout.simple_dropdown_item_1line,
+                symbolCodes
+            )
+        )
+        editTxtSearch.setOnItemClickListener { parent, view, position, id ->
+            performNewSearch()
+        }
+    }
+
+    override fun disableScrollListener() {
+        listSymbols.clearOnScrollListeners()
     }
 
     override fun showLoading() {
-        if (symbolsAdapter.getLastItem() != Spinner) {
+        if (symbolsAdapter.isEmpty()) {
+            spinner.visibility = VISIBLE
+        } else if (symbolsAdapter.getLastItem() != Spinner) {
             symbolsAdapter.add(Spinner)
         }
     }
 
     override fun hideLoading() {
-        if (symbolsAdapter.getLastItem() == Spinner) {
+        if (spinner.visibility == VISIBLE) {
+            spinner.visibility = GONE
+        } else if (symbolsAdapter.getLastItem() == Spinner) {
             symbolsAdapter.removeLastItem()
         }
     }
@@ -79,5 +105,13 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
     }
 
     override fun layoutId() = R.layout.fragment_symbols_list
+
+    private fun performNewSearch() {
+        presenter.dispose()
+        symbolsAdapter.clear()
+        symbolsRecyclerScrollListener.resetState()
+        listSymbols.addOnScrollListener(symbolsRecyclerScrollListener)
+        presenter.getSymbols(editTxtSearch.text.trim().toString())
+    }
 
 }

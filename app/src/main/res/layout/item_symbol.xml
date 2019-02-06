@@ -24,6 +24,8 @@
             android:id="@+id/txtCompanyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/txtSymbolCode"
             tools:text="Alibaba Group Holding Limited"/>
 

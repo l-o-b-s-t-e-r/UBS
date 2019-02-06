@@ -23,6 +23,10 @@ class LocalRepository(private val boxStore: BoxStore) : ILocalRepository {
         }
     }
 
+    override fun getAllSymbolCodes(): Single<List<SymbolCodeEntity>> {
+        return Single.just(boxSymbolCode.all)
+    }
+
     override fun getSymbolCodes(query: String, page: Int, limit: Int): Single<List<SymbolCodeEntity>> {
         return Single.just(
             boxSymbolCode.query()

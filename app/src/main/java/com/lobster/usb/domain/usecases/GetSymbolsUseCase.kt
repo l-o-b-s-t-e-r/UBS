@@ -44,5 +44,5 @@ class GetSymbolsUseCase @Inject constructor(
         }
     }
 
-    class Params(val query: String, val page: Int, val limit: Int = 20) : UseCaseParameters()
+    class Params(val query: String, val page: Int, val limit: Int) : UseCaseParameters()
 }

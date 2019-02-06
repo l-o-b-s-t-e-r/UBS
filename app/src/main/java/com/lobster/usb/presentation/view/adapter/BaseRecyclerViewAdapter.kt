@@ -78,11 +78,12 @@ abstract class BaseRecyclerViewAdapter<T : Any>() :
     }
 
     open fun addAll(newItems: List<T>?, position: Int = items.size) {
+        val safePosition = if (position < 0) 0 else position
         if (newItems == null) {
             clear()
         } else {
-            items.addAll(position, newItems)
-            notifyItemRangeInserted(position, newItems.size)
+            items.addAll(safePosition, newItems)
+            notifyItemRangeInserted(safePosition, newItems.size)
         }
     }
 
