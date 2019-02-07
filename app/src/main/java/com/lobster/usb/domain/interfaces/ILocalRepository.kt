@@ -24,6 +24,8 @@ interface ILocalRepository {
 
     fun setSymbolAsFavorite(symbolId: Long, isFavorite: Boolean): Completable
 
+    fun saveSymbolCompanyNews(symbol: String, companyEntity: SymbolCompanyEntity, newsEntities: List<SymbolNewsEntity>): Single<SymbolEntity>
+
     fun isEmpty(): Single<Boolean>
 
 }

@@ -19,7 +19,7 @@ interface IBasePresenter {
             this.view = null
         }
 
-        fun dispose() {
+        open fun dispose() {
 
         }
     }

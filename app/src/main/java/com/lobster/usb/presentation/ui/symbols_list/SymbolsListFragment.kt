@@ -3,6 +3,8 @@ package com.lobster.usb.presentation.ui.symbols_list
 
 import android.content.Context
 import android.os.Bundle
+import android.support.transition.Fade
+import android.support.transition.TransitionInflater
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
@@ -15,12 +17,16 @@ import com.lobster.usb.domain.pojo.Spinner
 import com.lobster.usb.domain.pojo.Symbol
 import com.lobster.usb.presentation.presenters.ISymbolsListPresenter
 import com.lobster.usb.presentation.ui.base.BaseFragment
+import com.lobster.usb.presentation.ui.symbol_details.SymbolDetailsFragment
+import com.lobster.usb.presentation.ui.symbol_details.SymbolDetailsFragment.Companion.SYMBOL_CODE
 import com.lobster.usb.presentation.view.adapter.AdapterTypes.SPINNER
 import com.lobster.usb.presentation.view.adapter.AdapterTypes.SYMBOL
 import com.lobster.usb.presentation.view.adapter.EndlessRecyclerViewScrollListener
 import com.lobster.usb.presentation.view.adapter.SimpleItemTouchHelperCallback
+import com.lobster.usb.utils.replace
 import kotlinx.android.synthetic.main.fragment_symbols_list.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
+import org.jetbrains.anko.support.v4.withArguments
 
 
 class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsListPresenter.Actions>(),
@@ -34,8 +40,8 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
         super.onAttach(context)
         symbolsAdapter = SymbolsListAdapter({ viewHolder ->
             itemTouchHelper.startDrag(viewHolder)
-        }, { symbol ->
-
+        }, { symbol, views ->
+            replaceFragment(symbol, views)
         }, { symbol, isFavorite ->
             presenter.addToFavorite(symbol, isFavorite)
         })
@@ -114,4 +120,25 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
         presenter.getSymbols(editTxtSearch.text.trim().toString())
     }
 
+    private fun replaceFragment(symbol: Symbol, views: List<Triple<View, String, String>>) {
+        val params = mutableListOf<Pair<String, Any>>(SYMBOL_CODE to symbol.symbolCode)
+        val sharedViews = mutableMapOf<View, String>()
+        views.forEach {
+            params.add(it.second to it.third)
+            sharedViews.put(it.first, it.third)
+        }
+
+        val fragment = SymbolDetailsFragment().withArguments(*params.toTypedArray())
+        val fragmentTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+
+        this.sharedElementReturnTransition = fragmentTransition
+        this.exitTransition = Fade()
+
+        fragment.sharedElementEnterTransition = fragmentTransition
+        fragment.enterTransition = Fade()
+
+
+        fragmentManager?.replace(R.id.rootContainer, fragment, true, sharedViews
+        )
+    }
 }

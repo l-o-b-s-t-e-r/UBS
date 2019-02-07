@@ -8,4 +8,8 @@ class RemoteRepository(private val api: IexApi) : IRemoteRepository {
 
     override fun getSymbols(symbols: String) = api.getSymbols(symbols)
 
+    override fun getSymbolCompany(symbol: String) = api.getSymbolCompany(symbol)
+
+    override fun getSymbolNews(symbol: String) = api.getCompanyNews(symbol)
+
 }

@@ -6,7 +6,7 @@ import io.reactivex.observers.DisposableCompletableObserver
  * Created by Lobster on 27/10/18.
  */
 
-class CustomCompletableObserver : DisposableCompletableObserver() {
+open class CustomCompletableObserver : DisposableCompletableObserver() {
 
     override fun onComplete() {
 

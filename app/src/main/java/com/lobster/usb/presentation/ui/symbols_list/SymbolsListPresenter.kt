@@ -40,4 +40,9 @@ class SymbolsListPresenter @Inject constructor(
             }
         })
     }
+
+    override fun dispose() {
+        getSymbolsUseCase.dispose()
+        getSymbolCodesUseCase.dispose()
+    }
 }

@@ -2,14 +2,7 @@
 <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rootContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.MainActivity">
-
-    <fragment android:id="@+id/fragment_symbols_list"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:name="com.lobster.usb.presentation.ui.symbols_list.SymbolsListFragment"
-              tools:layout="@layout/fragment_symbols_list"/>
-
-</FrameLayout>
+        tools:context=".presentation.ui.MainActivity"/>

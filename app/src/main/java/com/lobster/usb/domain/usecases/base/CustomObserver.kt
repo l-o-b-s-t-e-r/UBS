@@ -6,7 +6,7 @@ import io.reactivex.observers.DisposableObserver
  * Created by Lobster on 27/10/18.
  */
 
-class CustomObserver<T> : DisposableObserver<T>() {
+open class CustomObserver<T> : DisposableObserver<T>() {
 
     override fun onStart() {
 

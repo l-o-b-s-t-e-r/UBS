@@ -4,18 +4,16 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_l"
-        android:layout_marginEnd="@dimen/margin_l">
+        android:layout_height="wrap_content">
 
     <ImageView android:id="@+id/imgCover"
                android:layout_width="0dp"
                android:layout_height="0dp"
-               android:paddingEnd="@dimen/margin_xxxl"
+               android:scaleType="centerCrop"
                app:layout_constraintWidth_percent="0.33"
                app:layout_constraintTop_toTopOf="parent"
-               app:layout_constraintBottom_toBottomOf="@id/viewSymbolCodes"
-               tools:src="@android:color/black"/>
+               app:layout_constraintBottom_toBottomOf="parent"
+               tools:src="@drawable/placeholder"/>
 
     <TextView
             android:id="@+id/txtDate"
@@ -23,6 +21,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_xs"
             android:layout_marginTop="@dimen/margin_m"
+            android:layout_marginStart="@dimen/margin_xl"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgCover"
             tools:text="29.10.1994"/>
@@ -35,7 +34,7 @@
             android:textStyle="bold"
             android:layout_marginTop="@dimen/margin_m"
             app:layout_constraintTop_toBottomOf="@id/txtDate"
-            app:layout_constraintStart_toEndOf="@id/imgCover"
+            app:layout_constraintStart_toStartOf="@id/txtDate"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Alibaba video streaming"/>
 
@@ -44,20 +43,36 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_xs"
+            android:gravity="left"
             app:layout_constraintTop_toBottomOf="@id/txtTitle"
-            app:layout_constraintStart_toEndOf="@id/imgCover"
+            app:layout_constraintStart_toStartOf="@id/txtDate"
             app:layout_constraintEnd_toEndOf="parent"
             android:maxLines="2"
             android:ellipsize="end"
             tools:text="@string/pangram"/>
 
-    <LinearLayout
-            android:id="@+id/viewSymbolCodes"
+    <TextView
+            android:id="@+id/txtRelated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xl"
+            app:layout_constraintStart_toStartOf="@id/txtDate"
+            app:layout_constraintTop_toBottomOf="@id/txtDescription"
+            android:text="@string/symbol_details_related"/>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/listRelated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/margin_xl"
-            app:layout_constraintStart_toEndOf="@id/imgCover"
-            app:layout_constraintTop_toBottomOf="@id/txtDescription"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:nestedScrollingEnabled="false"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/margin_m"
+            app:layout_constraintTop_toTopOf="@id/txtRelated"
+            app:layout_constraintBottom_toBottomOf="@id/txtRelated"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txtRelated"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_tag"/>
+
 </android.support.constraint.ConstraintLayout>

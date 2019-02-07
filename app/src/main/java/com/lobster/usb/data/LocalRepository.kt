@@ -56,6 +56,19 @@ class LocalRepository(private val boxStore: BoxStore) : ILocalRepository {
         }
     }
 
+    override fun saveSymbolCompanyNews(symbol: String, companyEntity: SymbolCompanyEntity, newsEntities: List<SymbolNewsEntity>): Single<SymbolEntity> {
+        return Single.fromCallable {
+            val symbolEntity = getSymbolByCode(symbol)!!.apply {
+                company!!.target = companyEntity
+                news!!.clear()
+                news!!.addAll(newsEntities)
+            }
+
+            boxSymbol.put(symbolEntity)
+            symbolEntity
+        }
+    }
+
     override fun getSymbolCompany(symbolId: Long): Single<SymbolCompanyEntity> {
         return Single.just(boxSymbolCompany.get(symbolId))
     }

@@ -32,7 +32,7 @@ class SymbolTypeAdapter : TypeAdapter<SymbolsWrapper>() {
                         "symbol" -> symbolCode = jsonReader.nextString()
                         "companyName" -> companyName = jsonReader.nextString()
                         "change" -> change = jsonReader.nextDouble()
-                        "lastPrice" -> lastPrice = jsonReader.nextDouble()
+                        "latestPrice" -> lastPrice = jsonReader.nextDouble()
                         else -> jsonReader.skipValue()
                     }
                 }

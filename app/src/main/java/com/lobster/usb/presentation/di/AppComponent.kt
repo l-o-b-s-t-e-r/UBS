@@ -9,4 +9,6 @@ interface AppComponent {
 
     fun symbolsListComponent(module: SymbolsListModule): SymbolsListComponent
 
+    fun symbolDetailsComponent(module: SymbolDetailsModule): SymbolDetailsComponent
+
 }

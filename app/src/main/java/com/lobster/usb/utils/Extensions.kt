@@ -8,13 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
-import android.widget.CheckBox
 
 
 /**
  * Created by Lobster on 01.04.18.
  */
-fun FragmentManager.replace(@IdRes containerViewId: Int, fragment: Fragment, addToBackStack: Boolean = true, sharedElement: Pair<View, String>? = null) {
+fun FragmentManager.replace(@IdRes containerViewId: Int, fragment: Fragment, addToBackStack: Boolean = true, sharedElement: Map<View, String>? = null) {
     val transaction: FragmentTransaction
     if (addToBackStack) {
         transaction = beginTransaction()
@@ -26,8 +25,8 @@ fun FragmentManager.replace(@IdRes containerViewId: Int, fragment: Fragment, add
                 .replace(containerViewId, fragment)
     }
 
-    if (sharedElement != null) {
-        transaction.addSharedElement(sharedElement.first, sharedElement.second)
+    sharedElement?.forEach {
+        transaction.addSharedElement(it.key, it.value)
     }
 
     transaction.commitAllowingStateLoss()

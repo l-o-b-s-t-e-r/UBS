@@ -11,6 +11,7 @@ class App : MultiDexApplication() {
 
     lateinit var appComponent: AppComponent
     private var symbolsListComponent: SymbolsListComponent? = null
+    private var symbolDetailsComponent: SymbolDetailsComponent? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -29,7 +30,19 @@ class App : MultiDexApplication() {
         return symbolsListComponent
     }
 
+    fun initSymbolDetailsComponent(): SymbolDetailsComponent? {
+        if (symbolDetailsComponent == null) {
+            symbolDetailsComponent = appComponent.symbolDetailsComponent(SymbolDetailsModule())
+        }
+
+        return symbolDetailsComponent
+    }
+
     fun destroyListComponent() {
         symbolsListComponent = null
+    }
+
+    fun destroyDetailsComponent() {
+        symbolDetailsComponent = null
     }
 }

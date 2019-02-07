@@ -7,6 +7,8 @@ class SymbolNews(
 
     val date: Date,
 
+    val source: String,
+
     val title: String,
 
     val description: String,

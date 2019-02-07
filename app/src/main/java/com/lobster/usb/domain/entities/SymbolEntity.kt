@@ -1,6 +1,5 @@
 package com.lobster.usb.domain.entities
 
-import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import io.objectbox.relation.ToMany
@@ -17,7 +16,7 @@ class SymbolEntity(
     @Id
     var id: Long = 0
 ) {
-    @Backlink(to = "symbol")
+
     var news: ToMany<SymbolNewsEntity>? = null
 
     var company: ToOne<SymbolCompanyEntity>? = null
