@@ -14,6 +14,7 @@ abstract class BaseFragment<V : IBasePresenter.View, P : IBasePresenter.Actions<
 
     @Inject
     lateinit var presenter: P
+    protected var isRestoredFromBackStack = false
 
     abstract fun inject()
 
@@ -35,6 +36,7 @@ abstract class BaseFragment<V : IBasePresenter.View, P : IBasePresenter.Actions<
     override fun onDestroyView() {
         presenter.unbindView()
         presenter.dispose()
+        isRestoredFromBackStack = true
         super.onDestroyView()
     }
 

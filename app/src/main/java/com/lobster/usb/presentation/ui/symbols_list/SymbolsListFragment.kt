@@ -33,6 +33,7 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
     ISymbolsListPresenter.View {
 
     lateinit var symbolsAdapter: SymbolsListAdapter
+    lateinit var symbolSuggestionsAdapter: ArrayAdapter<String>
     lateinit var symbolsRecyclerScrollListener: EndlessRecyclerViewScrollListener
     lateinit var itemTouchHelper: ItemTouchHelper
 
@@ -54,19 +55,21 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        symbolsRecyclerScrollListener = object : EndlessRecyclerViewScrollListener(listSymbols.layoutManager!!) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                presenter.getSymbols(editTxtSearch.text.trim().toString(), page)
+        if (isRestoredFromBackStack) {
+            symbolsRecyclerScrollListener.mLayoutManager = listSymbols.layoutManager!!
+            setupRecyclerView()
+            setupSymbolSuggestions()
+        } else {
+            symbolsRecyclerScrollListener = object : EndlessRecyclerViewScrollListener(listSymbols.layoutManager!!) {
+                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                    presenter.getSymbols(editTxtSearch.text.trim().toString(), page)
+                }
             }
+            setupRecyclerView()
+            presenter.getSymbolCodes()
         }
 
-        listSymbols.adapter = symbolsAdapter
-        listSymbols.addOnScrollListener(symbolsRecyclerScrollListener)
-        itemTouchHelper.attachToRecyclerView(listSymbols)
-
         btnSearch.onClick { performNewSearch() }
-
-        presenter.getSymbolCodes()
     }
 
     override fun showSymbols(symbols: List<Symbol>) {
@@ -74,16 +77,12 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
     }
 
     override fun enableSuggestions(symbolCodes: List<String>) {
-        editTxtSearch.setAdapter(
-            ArrayAdapter<String>(
-                context,
-                android.R.layout.simple_dropdown_item_1line,
-                symbolCodes
-            )
+        symbolSuggestionsAdapter = ArrayAdapter(
+            context,
+            android.R.layout.simple_dropdown_item_1line,
+            symbolCodes
         )
-        editTxtSearch.setOnItemClickListener { parent, view, position, id ->
-            performNewSearch()
-        }
+        setupSymbolSuggestions()
     }
 
     override fun disableScrollListener() {
@@ -138,7 +137,19 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
         fragment.enterTransition = Fade()
 
 
-        fragmentManager?.replace(R.id.rootContainer, fragment, true, sharedViews
+        fragmentManager?.replace(
+            R.id.rootContainer, fragment, true, sharedViews
         )
+    }
+
+    private fun setupRecyclerView() {
+        listSymbols.adapter = symbolsAdapter
+        listSymbols.addOnScrollListener(symbolsRecyclerScrollListener)
+        itemTouchHelper.attachToRecyclerView(listSymbols)
+    }
+
+    private fun setupSymbolSuggestions() {
+        editTxtSearch.setAdapter(symbolSuggestionsAdapter)
+        editTxtSearch.setOnItemClickListener { _, _, _, _ -> performNewSearch() }
     }
 }

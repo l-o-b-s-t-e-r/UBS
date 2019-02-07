@@ -24,4 +24,8 @@ class SymbolDetailsPresenter(
     override fun addToFavorite(symbol: Symbol, isFavorite: Boolean) {
         addToFavoriteUseCase.execute(AddToFavoriteUseCase.Params(symbol, isFavorite))
     }
+
+    override fun dispose() {
+        getSymbolCompanyUseCase.dispose()
+    }
 }
