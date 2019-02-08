@@ -9,10 +9,12 @@ import android.support.v7.widget.DividerItemDecoration
 import android.view.View
 import com.lobster.usb.App
 import com.lobster.usb.R
+import com.lobster.usb.domain.pojo.Symbol
 import com.lobster.usb.domain.pojo.SymbolCompany
 import com.lobster.usb.presentation.presenters.ISymbolDetailsPresenter
 import com.lobster.usb.presentation.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_symbol_details.*
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.textColor
 
 
@@ -20,7 +22,7 @@ class SymbolDetailsFragment : BaseFragment<ISymbolDetailsPresenter.View, ISymbol
     ISymbolDetailsPresenter.View {
 
     companion object {
-        const val SYMBOL_CODE = "symbol_code"
+        const val SYMBOL_ID = "symbol_id"
         const val SYMBOL = "symbol"
         const val COMPANY = "company"
         const val CHANGE = "change"
@@ -53,7 +55,11 @@ class SymbolDetailsFragment : BaseFragment<ISymbolDetailsPresenter.View, ISymbol
             setDrawable(ContextCompat.getDrawable(context!!, R.drawable.divider_news)!!)
         })
 
-        presenter.getSymbolCompany(arguments!!.getString(SYMBOL_CODE)!!)
+        btnAddToFavorite.onClick {
+            presenter.addToFavorite(Symbol(arguments!!.getLong(SYMBOL_ID)), btnAddToFavorite.isChecked)
+        }
+
+        presenter.getSymbolCompany(arguments!!.getString(SYMBOL)!!)
     }
 
     override fun showLoading() {

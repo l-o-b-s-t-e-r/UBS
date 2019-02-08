@@ -20,7 +20,7 @@ import com.lobster.usb.domain.pojo.Symbol
 import com.lobster.usb.presentation.presenters.ISymbolsListPresenter
 import com.lobster.usb.presentation.ui.base.BaseFragment
 import com.lobster.usb.presentation.ui.symbol_details.SymbolDetailsFragment
-import com.lobster.usb.presentation.ui.symbol_details.SymbolDetailsFragment.Companion.SYMBOL_CODE
+import com.lobster.usb.presentation.ui.symbol_details.SymbolDetailsFragment.Companion.SYMBOL_ID
 import com.lobster.usb.presentation.view.adapter.AdapterTypes.SPINNER
 import com.lobster.usb.presentation.view.adapter.AdapterTypes.SYMBOL
 import com.lobster.usb.presentation.view.adapter.EndlessRecyclerViewScrollListener
@@ -122,7 +122,7 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
     }
 
     private fun replaceFragment(symbol: Symbol, views: List<Triple<View, String, String>>) {
-        val params = mutableListOf<Pair<String, Any>>(SYMBOL_CODE to symbol.symbolCode)
+        val params = mutableListOf<Pair<String, Any>>(SYMBOL_ID to symbol.id)
         val sharedViews = mutableMapOf<View, String>()
         views.forEach {
             params.add(it.second to it.third)

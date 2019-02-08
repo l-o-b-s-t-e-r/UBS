@@ -6,13 +6,13 @@ import com.lobster.usb.presentation.view.adapter.RecyclerViewItem
 data class Symbol(
     val id: Long,
 
-    val symbolCode: String,
+    val symbolCode: String = "",
 
-    val companyName: String,
+    val companyName: String = "",
 
-    val change: Double,
+    val change: Double = 0.0,
 
-    val lastPrice: Double,
+    val lastPrice: Double = 0.0,
 
     var isFavorite: Boolean = false
 ) : RecyclerViewItem {
