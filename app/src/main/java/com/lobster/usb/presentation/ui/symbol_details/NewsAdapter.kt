@@ -1,5 +1,7 @@
 package com.lobster.usb.presentation.ui.symbol_details
 
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
 import android.view.View
 import com.lobster.usb.R
 import com.lobster.usb.domain.pojo.SymbolNews
@@ -27,6 +29,9 @@ class NewsAdapter : BaseRecyclerViewAdapter<SymbolNews>() {
 
             val tagsAdapter = TagsAdapter()
             listRelated.adapter = tagsAdapter
+            listRelated.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL).apply {
+                setDrawable(ContextCompat.getDrawable(context!!, R.drawable.divider_news)!!)
+            })
             tagsAdapter.addAll(news.symbolCodes)
         }
     }

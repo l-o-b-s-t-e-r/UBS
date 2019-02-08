@@ -2,7 +2,10 @@ package com.lobster.usb.presentation.ui.symbol_details
 
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
 import android.view.View
 import com.lobster.usb.App
 import com.lobster.usb.R
@@ -10,6 +13,8 @@ import com.lobster.usb.domain.pojo.SymbolCompany
 import com.lobster.usb.presentation.presenters.ISymbolDetailsPresenter
 import com.lobster.usb.presentation.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_symbol_details.*
+import org.jetbrains.anko.textColor
+
 
 class SymbolDetailsFragment : BaseFragment<ISymbolDetailsPresenter.View, ISymbolDetailsPresenter.Actions>(),
     ISymbolDetailsPresenter.View {
@@ -38,10 +43,15 @@ class SymbolDetailsFragment : BaseFragment<ISymbolDetailsPresenter.View, ISymbol
 
         txtSymbolCode.text = arguments!!.getString(SYMBOL)
         txtCompanyName.text = arguments!!.getString(COMPANY)
-        txtChange.text = arguments!!.getString(CHANGE)
         btnAddToFavorite.isChecked = arguments!!.getString(IS_FAVORITE)!!.substringAfter(" ").toBoolean()
+        val change = arguments!!.getString(CHANGE)!!.toDouble()
+        txtChange.text = "${change}%"
+        txtChange.textColor = if (change < 0) ContextCompat.getColor(context!!, R.color.colorAccent) else Color.GREEN
 
         listNews.adapter = newsAdapter
+        listNews.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
+            setDrawable(ContextCompat.getDrawable(context!!, R.drawable.divider_news)!!)
+        })
 
         presenter.getSymbolCompany(arguments!!.getString(SYMBOL_CODE)!!)
     }

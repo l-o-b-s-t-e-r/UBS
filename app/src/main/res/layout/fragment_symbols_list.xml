@@ -5,6 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
+              android:background="@drawable/main_background"
               tools:context=".presentation.ui.symbols_list.SymbolsListFragment">
 
     <FrameLayout
@@ -32,14 +33,17 @@
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_l">
 
         <TextView android:id="@+id/txtSymbol"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
                   android:text="@string/symbols_list_symbol"
                   android:gravity="center"
-                  android:textSize="@dimen/text_size_m"
+                  android:textStyle="bold"
+                  android:textColor="@android:color/white"
+                  android:textSize="@dimen/text_size_xl"
                   app:layout_constraintStart_toStartOf="parent"
                   app:layout_constraintEnd_toStartOf="@id/txtChange"/>
 
@@ -48,7 +52,9 @@
                   android:layout_height="wrap_content"
                   android:text="@string/symbols_list_change"
                   android:gravity="center"
-                  android:textSize="@dimen/text_size_m"
+                  android:textStyle="bold"
+                  android:textColor="@android:color/white"
+                  android:textSize="@dimen/text_size_xl"
                   app:layout_constraintStart_toEndOf="@id/txtSymbol"
                   app:layout_constraintEnd_toStartOf="@id/txtLastPrice"/>
 
@@ -57,7 +63,9 @@
                   android:layout_height="wrap_content"
                   android:text="@string/symbols_list_last_price"
                   android:gravity="center"
-                  android:textSize="@dimen/text_size_m"
+                  android:textStyle="bold"
+                  android:textColor="@android:color/white"
+                  android:textSize="@dimen/text_size_xl"
                   app:layout_constraintStart_toEndOf="@id/txtChange"
                   app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -68,12 +76,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginStart="@dimen/margin_xl"
+            android:layout_marginEnd="@dimen/margin_xl"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:itemCount="5"
             tools:listitem="@layout/item_symbol"/>
 
     <FrameLayout
-            android:id="@+id/spinner"
+            android:id="@+id/spinnerMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">

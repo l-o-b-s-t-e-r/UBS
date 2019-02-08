@@ -5,6 +5,8 @@ import android.content.Context
 import android.os.Bundle
 import android.support.transition.Fade
 import android.support.transition.TransitionInflater
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
@@ -91,15 +93,15 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
 
     override fun showLoading() {
         if (symbolsAdapter.isEmpty()) {
-            spinner.visibility = VISIBLE
+            spinnerMain.visibility = VISIBLE
         } else if (symbolsAdapter.getLastItem() != Spinner) {
             symbolsAdapter.add(Spinner)
         }
     }
 
     override fun hideLoading() {
-        if (spinner.visibility == VISIBLE) {
-            spinner.visibility = GONE
+        if (spinnerMain.visibility == VISIBLE) {
+            spinnerMain.visibility = GONE
         } else if (symbolsAdapter.getLastItem() == Spinner) {
             symbolsAdapter.removeLastItem()
         }
@@ -145,6 +147,10 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
     private fun setupRecyclerView() {
         listSymbols.adapter = symbolsAdapter
         listSymbols.addOnScrollListener(symbolsRecyclerScrollListener)
+        listSymbols.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
+            setDrawable(ContextCompat.getDrawable(context!!, R.drawable.divider_symbols)!!)
+        })
+
         itemTouchHelper.attachToRecyclerView(listSymbols)
     }
 

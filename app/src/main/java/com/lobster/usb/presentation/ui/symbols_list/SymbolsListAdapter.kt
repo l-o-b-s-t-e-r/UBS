@@ -1,10 +1,12 @@
 package com.lobster.usb.presentation.ui.symbols_list
 
 import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.lobster.usb.App
 import com.lobster.usb.R
 import com.lobster.usb.domain.pojo.Symbol
 import com.lobster.usb.presentation.ui.symbol_details.SymbolDetailsFragment.Companion.CHANGE
@@ -16,6 +18,7 @@ import com.lobster.usb.utils.inflate
 import kotlinx.android.synthetic.main.item_symbol.view.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.sdk27.coroutines.onLongClick
+import org.jetbrains.anko.textColor
 import java.util.*
 
 
@@ -26,6 +29,8 @@ class SymbolsListAdapter(
 ) : BaseRecyclerViewAdapter<RecyclerViewItem>() {
 
     inner class SymbolsAdapter : ViewTypeDelegateAdapter<Symbol>(), ItemTouchHelperAdapter {
+        private val changeColorRed = ContextCompat.getColor(App.instance, R.color.colorAccent)
+
         override fun onCreateViewHolder(parent: ViewGroup) = SymbolsViewHolder(parent.inflate(R.layout.item_symbol))
 
         override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
@@ -43,7 +48,8 @@ class SymbolsListAdapter(
                 with(view) {
                     txtSymbolCode.text = symbol.symbolCode
                     txtCompanyName.text = symbol.companyName
-                    txtChange.text = symbol.change.toString()
+                    txtChange.text = "${symbol.change}%"
+                    txtChange.textColor = if (symbol.change < 0) changeColorRed else Color.GREEN
                     txtLastPrice.text = symbol.lastPrice.toString()
                     btnAddToFavorite.isChecked = symbol.isFavorite
 
@@ -51,7 +57,8 @@ class SymbolsListAdapter(
                         symbol.isFavorite = !symbol.isFavorite
                         btnAddToFavorite.isChecked = symbol.isFavorite
                         onFavoriteClick.invoke(symbol, symbol.isFavorite)
-                        ViewCompat.setTransitionName(txtChange, symbol.isFavorite.toString())
+                        ViewCompat.setTransitionName(txtChange, symbol.change.toString())
+                        ViewCompat.setTransitionName(btnAddToFavorite, "${symbol.symbolCode} ${symbol.isFavorite}")
                     }
                     onClick {
                         onItemClick.invoke(
@@ -74,7 +81,7 @@ class SymbolsListAdapter(
             }
 
             override fun onItemSelected() {
-                itemView.setBackgroundColor(Color.LTGRAY)
+                itemView.setBackgroundColor(ContextCompat.getColor(App.instance, R.color.colorPrimaryPressed))
             }
 
             override fun onItemClear() {
