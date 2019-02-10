@@ -69,6 +69,8 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
             presenter.getSymbolCodes()
         }
 
+        setupSwipeToRefresh()
+
         btnSearch.onClick { performNewSearch() }
     }
 
@@ -166,6 +168,13 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
                 presenter.getSymbols(editTxtSearch.text.trim().toString(), page)
             }
+        }
+    }
+
+    private fun setupSwipeToRefresh() {
+        swipeToRefresh.setOnRefreshListener {
+            performNewSearch()
+            swipeToRefresh.isRefreshing = false
         }
     }
 }
