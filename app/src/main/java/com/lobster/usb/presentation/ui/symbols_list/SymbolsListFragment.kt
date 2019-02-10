@@ -44,6 +44,7 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
         symbolsAdapter = SymbolsListAdapter({ viewHolder ->
             itemTouchHelper.startDrag(viewHolder)
         }, { symbol, views ->
+            presenter.addSymbolChangeListener(symbol)
             replaceFragment(symbol, views)
         }, { symbol, isFavorite ->
             presenter.addToFavorite(symbol, isFavorite)
@@ -61,12 +62,9 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
             symbolsRecyclerScrollListener.mLayoutManager = listSymbols.layoutManager!!
             setupRecyclerView()
             setupSymbolSuggestions()
+            presenter.updateSelectedSymbol()
         } else {
-            symbolsRecyclerScrollListener = object : EndlessRecyclerViewScrollListener(listSymbols.layoutManager!!) {
-                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                    presenter.getSymbols(editTxtSearch.text.trim().toString(), page)
-                }
-            }
+            symbolsRecyclerScrollListener = createScrollListener(listSymbols.layoutManager!!)
             setupRecyclerView()
             presenter.getSymbolCodes()
         }
@@ -89,6 +87,10 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
 
     override fun disableScrollListener() {
         listSymbols.clearOnScrollListeners()
+    }
+
+    override fun updateSymbol(symbol: Symbol) {
+        symbolsAdapter.updateItem(symbol)
     }
 
     override fun showLoading() {
@@ -157,5 +159,13 @@ class SymbolsListFragment : BaseFragment<ISymbolsListPresenter.View, ISymbolsLis
     private fun setupSymbolSuggestions() {
         editTxtSearch.setAdapter(symbolSuggestionsAdapter)
         editTxtSearch.setOnItemClickListener { _, _, _, _ -> performNewSearch() }
+    }
+
+    private fun createScrollListener(layoutManager: RecyclerView.LayoutManager): EndlessRecyclerViewScrollListener {
+        return object : EndlessRecyclerViewScrollListener(layoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                presenter.getSymbols(editTxtSearch.text.trim().toString(), page)
+            }
+        }
     }
 }

@@ -3,11 +3,15 @@ package com.lobster.usb.data
 import com.lobster.usb.domain.entities.*
 import com.lobster.usb.domain.interfaces.ILocalRepository
 import com.lobster.usb.domain.mappers.Mapper
+import com.lobster.usb.domain.pojo.Symbol
 import com.lobster.usb.domain.wrappers.SymbolsWrapper
 import io.objectbox.Box
 import io.objectbox.BoxStore
 import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Observer
 import io.reactivex.Single
+
 
 class LocalRepository(private val boxStore: BoxStore) : ILocalRepository {
 
@@ -56,7 +60,11 @@ class LocalRepository(private val boxStore: BoxStore) : ILocalRepository {
         }
     }
 
-    override fun saveSymbolCompanyNews(symbol: String, companyEntity: SymbolCompanyEntity, newsEntities: List<SymbolNewsEntity>): Single<SymbolEntity> {
+    override fun saveSymbolCompanyNews(
+        symbol: String,
+        companyEntity: SymbolCompanyEntity,
+        newsEntities: List<SymbolNewsEntity>
+    ): Single<SymbolEntity> {
         return Single.fromCallable {
             val symbolEntity = getSymbolByCode(symbol)!!.apply {
                 company!!.target = companyEntity
@@ -83,6 +91,21 @@ class LocalRepository(private val boxStore: BoxStore) : ILocalRepository {
             boxSymbol.put(symbolEntity)
         }
     }
+
+    override fun getSymbolChangeListener(symbolId: Long, observer: Observer<Symbol>): Observable<Symbol> {
+        return Observable.create<Symbol> { emitter ->
+            boxSymbol.query()
+                .equal(SymbolEntity_.id, symbolId)
+                .build()
+                .subscribe()
+                .onlyChanges()
+                .observer { data ->
+                    emitter.onNext(Mapper.symbolEntityToSymbol(data[0]))
+                }
+        }
+    }
+
+    override fun getSymbol(symbolId: Long) = Single.just(boxSymbol[symbolId])
 
     override fun isEmpty(): Single<Boolean> {
         return Single.just(boxSymbolCode.isEmpty)

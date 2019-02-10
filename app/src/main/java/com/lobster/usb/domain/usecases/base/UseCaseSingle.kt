@@ -20,4 +20,19 @@ abstract class UseCaseSingle<T, P : UseCaseParameters> : DisposableHandler() {
         addDisposable(observable.subscribeWith(observer))
     }
 
+    fun execute(transformer: SingleTransformer<T, T>? = null, params: P = UseCaseParameters() as P) {
+        execute(CustomSingleObserver(), transformer, params)
+    }
+
+    fun execute(observer: CustomSingleObserver<T>, params: P = UseCaseParameters() as P) {
+        execute(observer, null, params)
+    }
+
+    fun execute(params: P = UseCaseParameters() as P) {
+        execute(CustomSingleObserver(), null, params)
+    }
+
+    fun execute() {
+        execute(CustomSingleObserver(), null)
+    }
 }

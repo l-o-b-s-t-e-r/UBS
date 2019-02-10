@@ -17,4 +17,19 @@ data class Symbol(
     var isFavorite: Boolean = false
 ) : RecyclerViewItem {
     override var defaultViewType = AdapterTypes.SYMBOL
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Symbol
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
 }

@@ -4,8 +4,11 @@ import com.lobster.usb.domain.entities.SymbolCodeEntity
 import com.lobster.usb.domain.entities.SymbolCompanyEntity
 import com.lobster.usb.domain.entities.SymbolEntity
 import com.lobster.usb.domain.entities.SymbolNewsEntity
+import com.lobster.usb.domain.pojo.Symbol
 import com.lobster.usb.domain.wrappers.SymbolsWrapper
 import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Observer
 import io.reactivex.Single
 
 interface ILocalRepository {
@@ -26,6 +29,10 @@ interface ILocalRepository {
 
     fun saveSymbolCompanyNews(symbol: String, companyEntity: SymbolCompanyEntity, newsEntities: List<SymbolNewsEntity>): Single<SymbolEntity>
 
+    fun getSymbolChangeListener(symbolId: Long, observer: Observer<Symbol>): Observable<Symbol>
+
     fun isEmpty(): Single<Boolean>
+
+    fun getSymbol(symbolId: Long): Single<SymbolEntity>
 
 }

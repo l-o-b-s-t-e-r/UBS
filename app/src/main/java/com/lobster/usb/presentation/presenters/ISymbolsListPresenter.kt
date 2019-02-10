@@ -11,14 +11,22 @@ interface ISymbolsListPresenter {
         fun enableSuggestions(symbolCodes: List<String>)
 
         fun disableScrollListener()
+
+        fun updateSymbol(symbol: Symbol)
     }
 
     abstract class Actions : IBasePresenter.Actions<ISymbolsListPresenter.View>() {
+
+        abstract fun addSymbolChangeListener(symbol: Symbol)
+
         abstract fun getSymbols(query: String = "", page: Int = 0)
 
         abstract fun addToFavorite(symbol: Symbol, isFavorite: Boolean)
 
         abstract fun getSymbolCodes()
+
+        abstract fun updateSelectedSymbol()
+
     }
 
 }

@@ -1,8 +1,6 @@
 package com.lobster.usb.presentation.di
 
-import com.lobster.usb.domain.usecases.AddToFavoriteUseCase
-import com.lobster.usb.domain.usecases.GetSymbolCodesUseCase
-import com.lobster.usb.domain.usecases.GetSymbolsUseCase
+import com.lobster.usb.domain.usecases.*
 import com.lobster.usb.presentation.presenters.ISymbolsListPresenter
 import com.lobster.usb.presentation.ui.symbols_list.SymbolsListPresenter
 import dagger.Module
@@ -15,7 +13,9 @@ class SymbolsListModule {
     @FragmentScope
     fun providePresenter(getSymbolsUseCase: GetSymbolsUseCase,
                          addToFavoriteUseCase: AddToFavoriteUseCase,
-                         getSymbolCodesUseCase: GetSymbolCodesUseCase): ISymbolsListPresenter.Actions =
-        SymbolsListPresenter(getSymbolsUseCase, addToFavoriteUseCase, getSymbolCodesUseCase)
+                         getSymbolCodesUseCase: GetSymbolCodesUseCase,
+                         getSymbolChangesUseCase: GetSymbolChangesUseCase,
+                         getSymbolUseCase: GetSymbolUseCase): ISymbolsListPresenter.Actions =
+        SymbolsListPresenter(getSymbolsUseCase, addToFavoriteUseCase, getSymbolCodesUseCase, getSymbolChangesUseCase, getSymbolUseCase)
 
 }
